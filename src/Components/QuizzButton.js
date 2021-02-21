@@ -28,11 +28,11 @@ const styles = makeStyles((theme) => ({
     },
 }));
 
-const QuizzButton = ({ primary, text }) => {
+const QuizzButton = ({ primary, text, onClick }) => {
     const classes = styles();
 
     return (
-        <Button variant="contained" className={ primary ? classes.primary : classes.secondary }>
+        <Button variant="contained" onClick={onClick} className={ primary ? classes.primary : classes.secondary }>
             { text }
         </Button>
     )
