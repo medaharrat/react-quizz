@@ -51,7 +51,6 @@ const AdminInterface = ({ questions }) => {
             possible_answers: [right_answer, possible_answer1, possible_answer2, possible_answer3],
             right_answer: right_answer
         }
-        console.log(questions);
         addQuestion(newQ);                                
     };
 
@@ -77,15 +76,15 @@ const AdminInterface = ({ questions }) => {
                         spacing={1}
                     >
                     {
-                        questions.map( qst => {
+                        questions.map( question => {
                             return (
-                                <Grid item xs={8} key={qst.id}>
+                                <Grid item xs={8} key={question.id}>
                                     <Paper className={classes.paper}>
-                                        <span className={classes.span}>Q{questions.indexOf(qst) + 1}: </span> 
-                                        { qst.question }
+                                        <span className={classes.span}>Q{questions.indexOf(question) + 1}: </span> 
+                                        { question.question }
                                         <Button 
                                         className={classes.deleteBtn} 
-                                        onClick = {() => deleteQuestion(qst.id)}
+                                        onClick = {() => deleteQuestion(question.id)}
                                         color="secondary">
                                             Delete
                                         </Button>
@@ -168,6 +167,6 @@ const AdminInterface = ({ questions }) => {
 }
 
 const mapStateToProps = (state) => ({ questions: state.questions }); 
-const mapDispatchToProps = { addQuestion, deleteQuestion };  
+const mapDispatchToProps = { addQuestion/*, deleteQuestion*/ };  
 
 export default connect(mapStateToProps, mapDispatchToProps)(AdminInterface);  

@@ -1,6 +1,6 @@
-import history from '../history';
+import { RECEIVE_QUESTIONS, ADD_QUESTION, DELETE_QUESTION } from './types';                           
 
-var questions = [
+const questions = [
     {
         id: 1,
         question: "How old are you?",
@@ -39,38 +39,18 @@ var questions = [
     },
 ]
 
-export const RECEIVE_QUESTIONS = 'GET_QUESTIONS';                      
-export const ADD_QUESTION = 'ADD_QUESTION';
-export const DELETE_QUESTION = 'DELETE_QUESTION';
-
-export const getQuestions = () => {                                   
-  return (dispatch) => {
-        dispatch({type: RECEIVE_QUESTIONS, questions: questions})    
-    };
+export const getQuestions = () => (dispatch) => {
+    dispatch({type: RECEIVE_QUESTIONS, payload: questions})    
 };
 
-export const addQuestion = ({ question }) => {                                                      
-    return (dispatch) => {
-        //questions.append(question); not working, instead, x6 empty elements are added
-        dispatch({type: ADD_QUESTION, payload: {
-            id: question.id, 
-            question: question.question,
-            possible_answers: question.possible_answers, 
-            right_answer: question.right_answer
-        }})  
-        history.push("/questions");   
-    };
+export const addQuestion = (question) => (dispatch) => {
+    console.log('Action called!');
+    questions.push(question);
+    dispatch({type: ADD_QUESTION, payload: question})  
 };
 
 export const deleteQuestion = ({ question_id }) => {                                                      
     return (dispatch) => {
-        questions = questions.filter( 
-            function(value, index, arr) 
-            { 
-                return index === question_id
-            }
-        );
         dispatch({type: DELETE_QUESTION, payload: {question_id}})  
-        history.push("/questions");   
     };
   };

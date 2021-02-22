@@ -70,7 +70,7 @@ const Play = () => {
                     {
                         questions.map( qst => {
                             return (
-                                <>
+                                <Grid item xs={12} key={qst.id}>
                                     <Grid item xs={12}>
                                         <Typography className={classes.question}>
                                             <span className={classes.span}>Q:</span> { qst.question }
@@ -80,7 +80,10 @@ const Play = () => {
                                     {
                                         qst.possible_answers.map( answer => {
                                             return (
-                                                <Paper className={clsx(classes.paper, classes.answer)}>
+                                                <Paper 
+                                                    className={clsx(classes.paper, classes.answer)} 
+                                                    key={qst.possible_answers.indexOf(answer)}
+                                                >
                                                     <b> {(qst.possible_answers.indexOf(answer) + 1)} </b>
                                                     { '. ' + answer }
                                                 </Paper>
@@ -88,7 +91,7 @@ const Play = () => {
                                         })
                                     }
                                     </Grid>
-                                </>
+                                </Grid>
                             );
                         })
                     }
