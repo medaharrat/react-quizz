@@ -1,56 +1,23 @@
-import { RECEIVE_QUESTIONS, ADD_QUESTION, DELETE_QUESTION } from './types';                           
+import { RECEIVE_QUESTIONS, ADD_QUESTION, DELETE_QUESTION, SET_ANSWER } from './types';                           
 
-const questions = [
-    {
-        id: 1,
-        question: "How old are you?",
-        possible_answers: ["🧐 13", "😐 25", "🙄 31", "🤔 50"],
-        right_answer: "25"
-    },
-    {
-        id: 2,
-        question: "Where do you live?",
-        possible_answers: ["U.S", "Canada", "France"],
-        right_answer: "Canada"
-    },
-    {
-        id: 3,
-        question: "What is your highest degree?",
-        possible_answers: ["Bachelor", "Masters", "PhD"],
-        right_answer: "PhD"
-    },
-    {
-        id: 4,
-        question: "What is your name?",
-        possible_answers: ["1", "2", "3"],
-        right_answer: "2"
-    },
-    {
-        id: 5,
-        question: "What is your mothers mainden name?",
-        possible_answers: ["1", "2", "3"],
-        right_answer: "2"
-    },
-    {
-        id: 6,
-        question: "What is your highest achievement?",
-        possible_answers: ["1", "2", "3"],
-        right_answer: "2"
-    },
-]
-
+/* Questions Actions */
 export const getQuestions = () => (dispatch) => {
-    dispatch({type: RECEIVE_QUESTIONS, payload: questions})    
+    dispatch({type: RECEIVE_QUESTIONS})    
 };
 
 export const addQuestion = (question) => (dispatch) => {
-    console.log('Action called!');
-    questions.push(question);
-    dispatch({type: ADD_QUESTION, payload: question})  
+    dispatch({type: ADD_QUESTION, payload: question}) 
 };
 
-export const deleteQuestion = ({ question_id }) => {                                                      
-    return (dispatch) => {
-        dispatch({type: DELETE_QUESTION, payload: {question_id}})  
-    };
-  };
+export const deleteQuestion = ({ question_id }) => (dispatch) => {
+    dispatch({type: DELETE_QUESTION, payload: question_id})  
+};
+
+/* Answers Actions */
+export const setAnswer = (answer, question_id) => (dispatch) => {
+    console.log('Setting answer action called!');
+    dispatch({
+        type: SET_ANSWER, 
+        payload: {id: question_id, answer: answer}
+    })  
+};
