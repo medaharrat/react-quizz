@@ -1,15 +1,15 @@
 import React, { useState }  from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';  
+import { makeStyles } from '@material-ui/core/styles';
 import {
     Grid,
     Typography,
     FormControl,
     TextField,
 } from '@material-ui/core';
+import { connect } from 'react-redux';
 import QuizzButton from '../Components/QuizzButton';
 import QuizzQuestion from '../Components/QuizzQuestion';
-import { connect } from 'react-redux';
 import { addQuestion, deleteQuestion } from '../Actions';                      
 
 const styles = makeStyles((theme) => ({
@@ -45,7 +45,7 @@ const AdminInterface = ({ questions, addQuestion, deleteQuestion }) => {
     const [rightAnswer, setRightAnswer]         = useState("");
 
     const handleSubmit = (e) => {
-        //deleteQuestion(1)
+        /* Prevent default attitude */
         e.preventDefault();
         /* Create a new object */
         const newQuestion = {
@@ -189,7 +189,13 @@ AdminInterface.propTypes = {
     questions: PropTypes.array.isRequired,  
     addQuestion: PropTypes.func.isRequired,
     deleteQuestion: PropTypes.func.isRequired
-};  
+}; 
+
+AdminInterface.defaultProps = {
+    questions: [],  
+    addQuestion: null,
+    deleteQuestion: null
+};
 
 const mapStateToProps = (state) => ({ questions: state.questions }); 
 export default connect(mapStateToProps, { addQuestion, deleteQuestion })(AdminInterface);  

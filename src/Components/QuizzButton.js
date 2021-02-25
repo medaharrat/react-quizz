@@ -1,7 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
 import Button from '@material-ui/core/Button';
-import PropTypes from 'prop-types';
 
 const styles = makeStyles((theme) => ({
     primary: {
@@ -39,11 +39,15 @@ const QuizzButton = ({ primary, text, onClick }) => {
 }
 
 QuizzButton.propTypes = {
-    type: PropTypes.string,
-  };
+    primary: PropTypes.bool, 
+    text: PropTypes.string.isRequired, 
+    onClick: PropTypes.func.isRequired
+};
   
 QuizzButton.defaultProps = {
-    type: '',
+    primary: false, 
+    text: "", 
+    onClick: null
 };
 
 export default QuizzButton;

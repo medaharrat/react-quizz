@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
-import {
-    Checkbox,
-    Paper,
-} from '@material-ui/core';
+import { Checkbox, Paper } from '@material-ui/core';
 import clsx from  'clsx';
 
 const styles = makeStyles((theme) => ({
@@ -95,5 +93,15 @@ const QuizzAnswer = ({ answer, onAnswerSelect }) => {
     </Paper>
   );
 }
+
+QuizzAnswer.propTypes = {
+  answer: PropTypes.string.isRequired, 
+  onAnswerSelect: PropTypes.func.isRequired
+};
+
+QuizzAnswer.defaultProps = {
+  answer: "", 
+  onAnswerSelect: null
+};
 
 export default QuizzAnswer;

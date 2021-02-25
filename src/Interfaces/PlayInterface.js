@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';  
 import { makeStyles } from '@material-ui/core/styles';
 import {
     Grid,
@@ -9,7 +10,6 @@ import {
 import QuizzButton from '../Components/QuizzButton';
 import QuizzQuestion from '../Components/QuizzQuestion';
 import { connect } from 'react-redux';
-import { setAnswer } from '../Actions/index';
 
 const styles = makeStyles((theme) => ({
     root: {
@@ -46,13 +46,14 @@ const styles = makeStyles((theme) => ({
     }
 }));
 
-const Play = ({ questions, setAnswer }) => {
+const Play = ({ questions }) => {
     const classes = styles();
+    
     const [currentQuestionIndex, setCurrentQuestionIndex]     = useState(0);
     const [selectedAnswer, setSelectedAnswer]                 = useState("");
     const [answeredQuestions, setAnsweredQuestions]           = useState([]);
-    const [score, setScore]   
-                                    = useState(0)
+    const [score, setScore]                                   = useState(0);
+
     const deleteUndefined = (arr) => {
         /* This method removes undefined elements from an array 
         *  I am using it because I encontered a problem when
@@ -108,7 +109,7 @@ const Play = ({ questions, setAnswer }) => {
                                 </Typography>
                                 <Typography variant="h3" className={classes.finalResult}> 
                                 {
-                                    (score > (questionsNoUndef.length/2)) ? '🎉' : '😥'
+                                    (score >= (questionsNoUndef.length/2)) ? '🎉' : '😥'
                                 }
                                 </Typography>
                             </Grid>
@@ -135,8 +136,7 @@ const Play = ({ questions, setAnswer }) => {
                                                 color="secondary"
                                                 label={answeredQuestions.indexOf(qst) + 1} 
                                             />
-                                        )
-                                    })
+                                    )})
                                 }
                                 </b>
                             </Typography>
@@ -155,5 +155,13 @@ const Play = ({ questions, setAnswer }) => {
     )
 }
 
+Play.propTypes = {  
+    questions: PropTypes.array.isRequired,  
+}; 
+
+Play.defaultProps = {
+    questions: [],  
+};
+
 const mapStateToProps = (state) => ({ questions: state.questions }); 
-export default connect(mapStateToProps, { setAnswer })(Play);  
+export default connect(mapStateToProps)(Play);  

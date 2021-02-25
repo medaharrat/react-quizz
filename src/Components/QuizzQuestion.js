@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import {
     Grid,
@@ -83,5 +84,19 @@ const QuizzQuestion = ({ question, onAnswerSelect, withAnswers, setToDelete }) =
         </Grid>
     );
 }
+
+QuizzQuestion.propTypes = {
+    question: PropTypes.object.isRequired, 
+    onAnswerSelect: PropTypes.func.isRequired, 
+    withAnswers: PropTypes.bool, 
+    setToDelete: PropTypes.func.isRequired
+  };
+  
+  QuizzQuestion.defaultProps = {
+    question: {}, 
+    onAnswerSelect: null,
+    withAnswers: false,
+    setToDelete: null
+};
 
 export default QuizzQuestion;

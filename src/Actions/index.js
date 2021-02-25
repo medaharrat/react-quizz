@@ -1,4 +1,4 @@
-import { RECEIVE_QUESTIONS, ADD_QUESTION, DELETE_QUESTION, SET_ANSWER } from './types';                           
+import { RECEIVE_QUESTIONS, ADD_QUESTION, DELETE_QUESTION, SET_USERNAME } from './types';                           
 
 /* Questions Actions */
 export const getQuestions = () => (dispatch) => {
@@ -13,11 +13,11 @@ export const deleteQuestion = ({ question_id }) => (dispatch) => {
     dispatch({type: DELETE_QUESTION, payload: question_id})  
 };
 
-/* Answers Actions */
-export const setAnswer = (answer, question_id) => (dispatch) => {
-    console.log('Setting answer action called!');
+/* Other Actions */
+export const setUsername = (username) => (dispatch) => {
+    console.log('Setting username action called!');
     dispatch({
-        type: SET_ANSWER, 
-        payload: {id: question_id, answer: answer}
+        type: SET_USERNAME, 
+        payload: username
     })  
 };

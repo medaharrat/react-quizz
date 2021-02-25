@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
 import { Link } from "react-router-dom";
 
@@ -12,10 +13,20 @@ const QuizzLink = ({to, children}) => {
     const classes = styles();
     
     return (
-        <Link to = {to} className = {classes.link}>
+        <Link to={to} className={classes.link}>
             { children }
         </Link>
     );
 }
+
+QuizzLink.propTypes = {
+    to: PropTypes.string.isRequired, 
+    children: PropTypes.node.isRequired
+  };
+  
+QuizzLink.defaultProps = {
+    to: "", 
+    children: null
+};
 
 export default QuizzLink;

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';  
 import { makeStyles } from '@material-ui/core/styles';
 import { 
     FormControl,
@@ -59,14 +60,11 @@ const UserInterface = ({ questions }) => {
                             onChange={(e) => setName(e.target.value)}
                             required 
                         />
-                        {
-                            (name.length !== 0) && (questions.length !== 0) && (
-                                <QuizzLink to="/game">
-                                    <QuizzButton primary text = "Start"/>
-                                </QuizzLink>
-                            )
-                        }
-
+                        {(name.length !== 0) && (questions.length !== 0) && (
+                            <QuizzLink to="/game">
+                                <QuizzButton primary text = "Start"/>
+                            </QuizzLink>
+                        )}
                     </FormControl>  
                 </Grid>    
             </Grid>
@@ -74,6 +72,13 @@ const UserInterface = ({ questions }) => {
     );
 }
 
-const mapStateToProps = (state) => ({ questions: state.questions }); 
+UserInterface.propTypes = {  
+    questions: PropTypes.array.isRequired,  
+}; 
 
+UserInterface.defaultProps = {
+    questions: [],  
+};
+
+const mapStateToProps = (state) => ({ questions: state.questions }); 
 export default connect(mapStateToProps)(UserInterface);  

@@ -1,6 +1,7 @@
 import { RECEIVE_QUESTIONS, ADD_QUESTION, DELETE_QUESTION } from '../Actions/types';                           
 
-const initialState = { 
+const initialState = {
+  //add username here
   questions: [
     {
         id: 1,

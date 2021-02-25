@@ -15,6 +15,7 @@ import Container from '@material-ui/core/Container';
 const styles = makeStyles((theme) => ({
     container: {
       backgroundColor: '#F2F2F2',
+      height: '100vh'
     },
 }));
 
