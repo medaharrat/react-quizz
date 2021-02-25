@@ -3,9 +3,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import { 
     FormControl,
     TextField, 
-    Grid
+    Grid,
+    Typography
 } from '@material-ui/core';
-import Alert from '@material-ui/lab/Alert';
 import QuizzButton from '../Components/QuizzButton';
 import QuizzLink from '../Components/QuizzLink';
 import { connect } from 'react-redux';
@@ -13,13 +13,19 @@ import { connect } from 'react-redux';
 const styles = makeStyles((theme) => ({
     root: {
       flexGrow: 1,
-      marginTop: theme.spacing(20),
+      marginTop: theme.spacing(10),
       height: '68vh',
     },
-    alert: {
-        marginTop: theme.spacing(20),
-        marginRight: theme.spacing(20),
-        marginLeft: theme.spacing(20),
+    input: {
+        width: theme.spacing(70)
+    },
+    notice: {
+        height: '25vh',
+        backgroundColor: '#DCDCDC',
+        borderRadius: 10,
+        textAlign: 'justify',
+        padding: theme.spacing(3),
+        color: '#404040',
     }
 }));
 
@@ -27,26 +33,25 @@ const UserInterface = ({ questions }) => {
     const classes = styles();
 
     const [name, setName] = useState("");
-    const [alert, setAlert] = useState(false);
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        if (name.length === 0 || questions.length === 0){
-            setAlert(true);
-            setTimeout(() => {
-                setAlert(false);
-            }, 3000)
-        }
-    }
 
     return (
         <div className={classes.root}>
-            <Grid container direction="column" justify="center" spacing={3}>
+            <Grid container justify="center" spacing={3}>
+                <Grid item xs={6}>
+                    <div className={classes.notice}>
+                        <Typography gutterBottom>
+                            Dear Player, the application is a form of a quizz game where you get to answer
+                            a few questions and get your score. The questions can be added from the Admin interface
+                            which can be accessed by clicking the Admin button above. You have to enter your name first 
+                            before you can start the game. <br/>Good luck :D
+                        </Typography>
+                    </div>
+                </Grid>
                 <Grid item xs={12}>
                     <FormControl>
                         <TextField
                             id="outlined-textarea"
-                            label="Enter your name"
+                            label="Enter your name to continue"
                             multiline
                             variant="outlined"
                             className={classes.input}
@@ -54,25 +59,16 @@ const UserInterface = ({ questions }) => {
                             onChange={(e) => setName(e.target.value)}
                             required 
                         />
-                        <QuizzLink to="/game">
-                            <QuizzButton primary onClick={ handleSubmit } text = "Start"/>
-                        </QuizzLink>
+                        {
+                            (name.length !== 0) && (questions.length !== 0) && (
+                                <QuizzLink to="/game">
+                                    <QuizzButton primary text = "Start"/>
+                                </QuizzLink>
+                            )
+                        }
+
                     </FormControl>  
                 </Grid>    
-                {
-                    alert && (
-                        <Alert className={classes.alert} variant="filled" severity="info">
-                            {
-                                questions.length === 0 &&
-                                ( <b>Sorry! no questions to answer</b> )   
-                            }
-                            {
-                                name.length === 0 &&
-                                ( <b>Please enter your name to continue!</b> )
-                            }
-                        </Alert>
-                    )
-                }
             </Grid>
         </div>
     );

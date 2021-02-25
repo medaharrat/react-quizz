@@ -51,7 +51,20 @@ const Play = ({ questions, setAnswer }) => {
     const [currentQuestionIndex, setCurrentQuestionIndex]     = useState(0);
     const [selectedAnswer, setSelectedAnswer]                 = useState("");
     const [answeredQuestions, setAnsweredQuestions]           = useState([]);
-    const [score, setScore]                                   = useState(0)
+    const [score, setScore]   
+                                    = useState(0)
+    const deleteUndefined = (arr) => {
+        /* This method removes undefined elements from an array 
+        *  I am using it because I encontered a problem when
+        *  adding a new question, it is adding many empty
+        *  elements 
+        * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+       return arr.filter(function( el ) {
+        return el !== undefined;
+      });
+    }
+
+    const questionsNoUndef = deleteUndefined(questions);
 
     const handleAnswer = () => {
         if (selectedAnswer.length === 0){
@@ -76,9 +89,9 @@ const Play = ({ questions, setAnswer }) => {
             <div className={classes.root}>
                 <Grid container alignItems="center" spacing={3}>
                     {
-                        (answeredQuestions.length !== questions.length) 
+                        (answeredQuestions.length !== questionsNoUndef.length) /* Something wrong here */
                         ?
-                        [questions[currentQuestionIndex]].map( question => {
+                        [questionsNoUndef[currentQuestionIndex]].map( question => {
                             return (
                                 <QuizzQuestion 
                                     question={question} 
@@ -95,7 +108,7 @@ const Play = ({ questions, setAnswer }) => {
                                 </Typography>
                                 <Typography variant="h3" className={classes.finalResult}> 
                                 {
-                                    (score > (questions.length/2)) ? '🎉' : '😥'
+                                    (score > (questionsNoUndef.length/2)) ? '🎉' : '😥'
                                 }
                                 </Typography>
                             </Grid>
@@ -103,7 +116,7 @@ const Play = ({ questions, setAnswer }) => {
                     }
                     <Grid item xs={12}>
                     {
-                        (answeredQuestions.length != questions.length) && (
+                        (answeredQuestions.length != questionsNoUndef.length) && (
                             <QuizzButton onClick={ handleAnswer } primary text = "Next"/>
                         )
                     }

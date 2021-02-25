@@ -79,6 +79,7 @@ const AdminInterface = ({ questions, addQuestion, deleteQuestion }) => {
         return el !== undefined;
       });
     }
+    
     return (
         <div className={classes.root}>
             <Grid 
