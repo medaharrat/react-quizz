@@ -1,7 +1,8 @@
 import React from 'react';
 import {
     Switch,
-    Route
+    Route,
+    Redirect
   } from "react-router-dom";
 import { makeStyles } from '@material-ui/styles';
 import QuizzButton from '../Components/QuizzButton';
@@ -11,6 +12,7 @@ import AdminInterface from '../Interfaces/AdminInterface';
 import UserInterface from '../Interfaces/UserInterface';
 import PlayInterface from '../Interfaces/PlayInterface';
 import Container from '@material-ui/core/Container';
+import { connect } from 'react-redux';
 
 const styles = makeStyles((theme) => ({
     container: {
@@ -19,7 +21,7 @@ const styles = makeStyles((theme) => ({
     },
 }));
 
-const General = () => {
+const General = ({ username }) => {
     const classes = styles();
 
     return (
@@ -35,6 +37,8 @@ const General = () => {
                 >
                     <QuizzButton primary text = "User"/>
                 </QuizzLink>
+
+                <Redirect to="/play" />
                 
                 <Switch>
                     <Route path="/admin">
@@ -45,6 +49,9 @@ const General = () => {
                     </Route>
                     <Route path="/game">
                         <PlayInterface />
+                        {(username.length === 0) && (
+                            <Redirect to="/play" />
+                        )}
                     </Route>
                 </Switch>
             </Box>
@@ -52,4 +59,5 @@ const General = () => {
     );
 }
 
-export default General;
+const mapStateToProps = (state) => ({ username: state.user.username }); 
+export default connect(mapStateToProps)(General);  

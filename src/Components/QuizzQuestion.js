@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import {
     Grid,
     Typography,
     Paper,
-    Button
+    Button,
+    RadioGroup 
 } from '@material-ui/core';
 import QuizzAnswer from './QuizzAnswer';
 
@@ -32,8 +33,14 @@ const styles = makeStyles((theme) => ({
     }
 }));
 
-const QuizzQuestion = ({ question, onAnswerSelect, withAnswers, setToDelete }) => {
+const QuizzQuestion = ({ question, withAnswers, setToDelete, onAnswerSelect, showRightAnswer, disabled }) => {
     const classes = styles();
+    const [selectedAnswer, setSelectedAnswer] = useState("");
+
+    const handleChange = (e) => {
+        setSelectedAnswer(e.target.value);
+        onAnswerSelect(e.target.value);
+    }
 
     return (
         <Grid item xs={12} key={question.id}>
@@ -67,17 +74,21 @@ const QuizzQuestion = ({ question, onAnswerSelect, withAnswers, setToDelete }) =
             { 
             withAnswers && (
                 <Grid item className={classes.answersContainer} xs={12}>
+                <RadioGroup aria-label="answer" name="answerr" value={selectedAnswer} onChange={handleChange}>   
                 {
                     question.possible_answers.map( answer => {
+                        console.log(question.right_answer === selectedAnswer);
                         return (
+                            
                             <QuizzAnswer 
                                 key={answer} 
                                 answer={answer} 
-                                onAnswerSelect={onAnswerSelect} 
+                                isRightAnswer={showRightAnswer && question.right_answer === answer}
                             />
                         )
                     })
                 }
+                </RadioGroup>
                 </Grid>
             )
             }
@@ -87,16 +98,14 @@ const QuizzQuestion = ({ question, onAnswerSelect, withAnswers, setToDelete }) =
 
 QuizzQuestion.propTypes = {
     question: PropTypes.object.isRequired, 
-    onAnswerSelect: PropTypes.func.isRequired, 
     withAnswers: PropTypes.bool, 
-    setToDelete: PropTypes.func.isRequired
+    setToDelete: PropTypes.func,
+    onAnswerSelect: PropTypes.func
   };
   
   QuizzQuestion.defaultProps = {
     question: {}, 
-    onAnswerSelect: null,
     withAnswers: false,
-    setToDelete: null
 };
 
 export default QuizzQuestion;

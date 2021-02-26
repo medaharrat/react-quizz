@@ -10,6 +10,7 @@ import {
 import QuizzButton from '../Components/QuizzButton';
 import QuizzQuestion from '../Components/QuizzQuestion';
 import { connect } from 'react-redux';
+import clsx from  'clsx';
 
 const styles = makeStyles((theme) => ({
     root: {
@@ -27,6 +28,10 @@ const styles = makeStyles((theme) => ({
         textAlign: 'left',
         color: theme.palette.text.secondary,
         marginBottom: theme.spacing(1)
+    },
+    highlightScore: {
+        backgroundColor: '#19FF19',
+        color: '#FFFFFF'
     },
     answersContainer: {
         height: '40vh',
@@ -46,13 +51,14 @@ const styles = makeStyles((theme) => ({
     }
 }));
 
-const Play = ({ questions }) => {
+const Play = ({ questions, username }) => {
     const classes = styles();
     
     const [currentQuestionIndex, setCurrentQuestionIndex]     = useState(0);
     const [selectedAnswer, setSelectedAnswer]                 = useState("");
     const [answeredQuestions, setAnsweredQuestions]           = useState([]);
     const [score, setScore]                                   = useState(0);
+    const [showAnswer, setShowAnswer]                         = useState(false);
 
     const deleteUndefined = (arr) => {
         /* This method removes undefined elements from an array 
@@ -68,56 +74,45 @@ const Play = ({ questions }) => {
     const questionsNoUndef = deleteUndefined(questions);
 
     const handleAnswer = () => {
-        if (selectedAnswer.length === 0){
-            alert('You have not answered to this question, are you sure you want to proceed?')
-        }
-        else {
-            /* Save Answer */
-            if (selectedAnswer === questions[currentQuestionIndex].right_answer){
+        if (selectedAnswer.length !== 0){
+            /* Set the score */
+            if (selectedAnswer === questions[currentQuestionIndex].right_answer)
                 setScore(score + 1);
-            }
-            /* Save the answered questions and the score */
+            /* Save the answered questions */
             setAnsweredQuestions([ ...answeredQuestions, questions[currentQuestionIndex]]);
+            /* Show the right answer */
+            setShowAnswer(true);
             /* Skip to the next questions */
-            if ((currentQuestionIndex + 1) != questions.length)
-                setCurrentQuestionIndex(currentQuestionIndex + 1);
+            setTimeout(() => {
+                if ((currentQuestionIndex + 1) !== questions.length)
+                    setCurrentQuestionIndex(currentQuestionIndex + 1)
+                    setShowAnswer(false);
+            }, 700);
             /* Reset */
             setSelectedAnswer("");
         }
+        else 
+            alert('Oops! You have not answered this question.')
     }
 
     return (
             <div className={classes.root}>
                 <Grid container alignItems="center" spacing={3}>
                     {
-                        (answeredQuestions.length !== questionsNoUndef.length) /* Something wrong here */
-                        ?
-                        [questionsNoUndef[currentQuestionIndex]].map( question => {
+                        [questionsNoUndef[currentQuestionIndex]].map(question => {
                             return (
                                 <QuizzQuestion 
                                     question={question} 
                                     onAnswerSelect={setSelectedAnswer} 
                                     withAnswers 
+                                    showRightAnswer={showAnswer}
                                 />
                             )
                         })
-                        :
-                        (
-                            <Grid item xs={12} className={classes.showScore}>
-                                <Typography variant="h4" className={classes.finalResult}>
-                                    You're done! your score is {score + '/' + answeredQuestions.length} 
-                                </Typography>
-                                <Typography variant="h3" className={classes.finalResult}> 
-                                {
-                                    (score >= (questionsNoUndef.length/2)) ? '🎉' : '😥'
-                                }
-                                </Typography>
-                            </Grid>
-                        )
                     }
                     <Grid item xs={12}>
                     {
-                        (answeredQuestions.length != questionsNoUndef.length) && (
+                        (answeredQuestions.length !== questionsNoUndef.length) && (
                             <QuizzButton onClick={ handleAnswer } primary text = "Next"/>
                         )
                     }
@@ -143,10 +138,12 @@ const Play = ({ questions }) => {
                         </Paper>
                     </Grid>
                     <Grid item xs={6}>
-                        <Paper className={classes.paper}>
+                        <Paper className={clsx(classes.paper, (answeredQuestions.length === questionsNoUndef.length) && classes.highlightScore)}>
                             <Typography variant="subtitle2" gutterBottom>
-                                Current score: 
-                                <b> { score + '/' + answeredQuestions.length } </b>
+                                Current score of { username }: 
+                                <b>
+                                    { ' ' + score + '/' + answeredQuestions.length } 
+                                </b>
                             </Typography>
                         </Paper>
                     </Grid>
@@ -157,11 +154,13 @@ const Play = ({ questions }) => {
 
 Play.propTypes = {  
     questions: PropTypes.array.isRequired,  
+    username: PropTypes.string.isRequired,
 }; 
 
 Play.defaultProps = {
     questions: [],  
+    username: ""
 };
 
-const mapStateToProps = (state) => ({ questions: state.questions }); 
+const mapStateToProps = (state) => ({ questions: state.questions, username: state.user.username }); 
 export default connect(mapStateToProps)(Play);  

@@ -45,13 +45,12 @@ const QuizzButton = ({ primary, text, onClick }) => {
 QuizzButton.propTypes = {
     primary: PropTypes.bool, 
     text: PropTypes.string.isRequired, 
-    onClick: PropTypes.func.isRequired
+    onClick: PropTypes.func
 };
   
 QuizzButton.defaultProps = {
     primary: false, 
     text: "", 
-    onClick: null
 };
 
 export default QuizzButton;

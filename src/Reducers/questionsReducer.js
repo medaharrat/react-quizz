@@ -1,12 +1,11 @@
 import { RECEIVE_QUESTIONS, ADD_QUESTION, DELETE_QUESTION } from '../Actions/types';                           
 
 const initialState = {
-  //add username here
   questions: [
     {
         id: 1,
         question: "How old are you?",
-        possible_answers: ["🧐 13", "😐 25", "🙄 31", "🤔 50"],
+        possible_answers: ["13", "25", "31", "50"],
         right_answer: "25"
     },
     {

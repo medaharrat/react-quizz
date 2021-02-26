@@ -10,6 +10,7 @@ import {
 import QuizzButton from '../Components/QuizzButton';
 import QuizzLink from '../Components/QuizzLink';
 import { connect } from 'react-redux';
+import { setUsername } from '../Actions/index';
 
 const styles = makeStyles((theme) => ({
     root: {
@@ -30,10 +31,15 @@ const styles = makeStyles((theme) => ({
     }
 }));
 
-const UserInterface = ({ questions }) => {
+const UserInterface = ({ questions, setUsername }) => {
     const classes = styles();
 
     const [name, setName] = useState("");
+
+    const handleSubmit = () => {
+        if (name.length !== 0)
+            setUsername(name);
+    }
 
     return (
         <div className={classes.root}>
@@ -62,7 +68,11 @@ const UserInterface = ({ questions }) => {
                         />
                         {(name.length !== 0) && (questions.length !== 0) && (
                             <QuizzLink to="/game">
-                                <QuizzButton primary text = "Start"/>
+                                <QuizzButton 
+                                    primary 
+                                    text="Start"
+                                    onClick={handleSubmit}
+                                />
                             </QuizzLink>
                         )}
                     </FormControl>  
@@ -74,11 +84,13 @@ const UserInterface = ({ questions }) => {
 
 UserInterface.propTypes = {  
     questions: PropTypes.array.isRequired,  
+    setUsername: PropTypes.func.isRequired
 }; 
 
 UserInterface.defaultProps = {
     questions: [],  
+    setUsername: null
 };
 
 const mapStateToProps = (state) => ({ questions: state.questions }); 
-export default connect(mapStateToProps)(UserInterface);  
+export default connect(mapStateToProps, { setUsername })(UserInterface);  
