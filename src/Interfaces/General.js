@@ -37,8 +37,6 @@ const General = ({ username }) => {
                 >
                     <QuizzButton primary text = "User"/>
                 </QuizzLink>
-
-                <Redirect to="/play" />
                 
                 <Switch>
                     <Route path="/admin">

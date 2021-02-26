@@ -33,7 +33,10 @@ const styles = makeStyles((theme) => ({
     }
 }));
 
-const QuizzQuestion = ({ question, withAnswers, setToDelete, onAnswerSelect, showRightAnswer, disabled }) => {
+const QuizzQuestion = ({ 
+    question, withAnswers, onAnswerSelect, showRightAnswer,
+    deleteQuestion
+}) => {
     const classes = styles();
     const [selectedAnswer, setSelectedAnswer] = useState("");
 
@@ -56,7 +59,7 @@ const QuizzQuestion = ({ question, withAnswers, setToDelete, onAnswerSelect, sho
                                 className={classes.deleteBtn} 
                                 variant="outlined" 
                                 color="secondary"
-                                onClick={setToDelete(question.id)}
+                                onClick={() => deleteQuestion(question.id) }
                             >
                                 Delete
                             </Button>
@@ -99,7 +102,6 @@ const QuizzQuestion = ({ question, withAnswers, setToDelete, onAnswerSelect, sho
 QuizzQuestion.propTypes = {
     question: PropTypes.object.isRequired, 
     withAnswers: PropTypes.bool, 
-    setToDelete: PropTypes.func,
     onAnswerSelect: PropTypes.func
   };
   
@@ -108,4 +110,4 @@ QuizzQuestion.propTypes = {
     withAnswers: false,
 };
 
-export default QuizzQuestion;
+export default QuizzQuestion;  

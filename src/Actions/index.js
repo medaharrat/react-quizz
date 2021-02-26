@@ -12,13 +12,12 @@ export const addQuestion = (question) => (dispatch) => {
     dispatch({type: ADD_QUESTION, payload: question}) 
 };
 
-export const deleteQuestion = ({ question_id }) => (dispatch) => {
-    dispatch({type: DELETE_QUESTION, payload: question_id})  
+export const deleteQuestion = (questionId) => (dispatch) => {
+    dispatch({type: DELETE_QUESTION, payload: questionId})  
 };
 
 /* User Actions */
 export const getUsername = () => (dispatch) => {
-    console.log('inside action')
     dispatch({type: GET_USERNAME})  
 };
 

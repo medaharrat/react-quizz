@@ -7,10 +7,10 @@ import {
     FormControl,
     TextField,
 } from '@material-ui/core';
-import { connect } from 'react-redux';
 import QuizzButton from '../Components/QuizzButton';
 import QuizzQuestion from '../Components/QuizzQuestion';
 import { addQuestion, deleteQuestion } from '../Actions';                      
+import { connect } from 'react-redux';
 
 const styles = makeStyles((theme) => ({
     root: {
@@ -65,8 +65,7 @@ const AdminInterface = ({ questions, addQuestion, deleteQuestion }) => {
     };
 
     const handleDelete = (questionId) => {
-        console.log("DEL " + questionId);
-        //deleteQuestion(1);
+        deleteQuestion(questionId);
     }
 
     const deleteUndefined = (arr) => {
@@ -107,7 +106,7 @@ const AdminInterface = ({ questions, addQuestion, deleteQuestion }) => {
                                 <QuizzQuestion 
                                     key={question.id} 
                                     question={question}
-                                    setToDelete={handleDelete}
+                                    deleteQuestion={handleDelete}
                                 />
                             );
                         })
@@ -198,4 +197,5 @@ AdminInterface.defaultProps = {
 };
 
 const mapStateToProps = (state) => ({ questions: state.questions }); 
+
 export default connect(mapStateToProps, { addQuestion, deleteQuestion })(AdminInterface);  
