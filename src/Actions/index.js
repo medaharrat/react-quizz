@@ -22,5 +22,5 @@ export const getUsername = () => (dispatch) => {
 };
 
 export const setUsername = (username) => (dispatch) => {
-    dispatch({type: SET_USERNAME, payload: GET_USERNAME})  
+    dispatch({type: SET_USERNAME, payload: username})  
 };

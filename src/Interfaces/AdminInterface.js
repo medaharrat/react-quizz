@@ -15,7 +15,7 @@ import { connect } from 'react-redux';
 
 const styles = makeStyles((theme) => ({
     root: {
-      flexGrow: 1
+      flexGrow: 1,
     },
     title: {
         marginTop: theme.spacing(1),

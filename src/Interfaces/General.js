@@ -22,7 +22,7 @@ const General = ({ username }) => {
 
     return (
         <Container>
-            <Box component="div" className={classes.container}>
+            <div className={classes.container}>
                 { /* NAV */ }
                 <QuizzLink to="/admin">
                     <QuizzButton primary text = "Admin"/>
@@ -45,7 +45,7 @@ const General = ({ username }) => {
                         )}
                     </Route>
                 </Switch>
-            </Box>
+            </div>
         </Container>
     );
 }
