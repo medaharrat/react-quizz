@@ -50,7 +50,7 @@ QuizzButton.propTypes = {
   
 QuizzButton.defaultProps = {
     primary: false, 
-    text: "", 
+    onClick: null, 
 };
 
 export default QuizzButton;

@@ -21,12 +21,7 @@ const QuizzLink = ({to, children}) => {
 
 QuizzLink.propTypes = {
     to: PropTypes.string.isRequired, 
-    children: PropTypes.node.isRequired
-  };
-  
-QuizzLink.defaultProps = {
-    to: "", 
-    children: null
+    children: PropTypes.node.isRequired 
 };
 
 export default QuizzLink;

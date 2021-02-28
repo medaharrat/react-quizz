@@ -1,11 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';  
 import { makeStyles } from '@material-ui/styles';
-import {
-    Switch,
-    Route,
-    Redirect
-  } from "react-router-dom";
-  import { Container, Box } from '@material-ui/core';
+import { Switch, Route, Redirect } from "react-router-dom";
+import { Container, Box } from '@material-ui/core';
 import QuizzButton from '../Components/QuizzButton';
 import QuizzLink from '../Components/QuizzLink';
 import AdminInterface from '../Interfaces/AdminInterface';
@@ -51,6 +48,10 @@ const General = ({ username }) => {
             </Box>
         </Container>
     );
+}
+
+General.propTypes = {
+    username: PropTypes.string
 }
 
 const mapStateToProps = (state) => ({ username: state.user.username }); 

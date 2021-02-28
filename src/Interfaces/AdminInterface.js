@@ -9,6 +9,7 @@ import {
 } from '@material-ui/core';
 import QuizzButton from '../Components/QuizzButton';
 import QuizzQuestion from '../Components/QuizzQuestion';
+import { deleteUndefined } from '../utils/commonFunc';
 import { addQuestion, deleteQuestion } from '../Actions';                      
 import { connect } from 'react-redux';
 
@@ -37,7 +38,7 @@ const styles = makeStyles((theme) => ({
 const AdminInterface = ({ questions, addQuestion, deleteQuestion }) => {
     const classes = styles();
 
-    const questionId                            = (questions.length)++;
+    const questionId                            = Math.floor((Math.random() * 50) + 5);
     const [question, setQuestion]               = useState("");
     const [possibleAnswer1, setPossibleAnswer1] = useState("");
     const [possibleAnswer2, setPossibleAnswer2] = useState("");
@@ -64,21 +65,8 @@ const AdminInterface = ({ questions, addQuestion, deleteQuestion }) => {
         setRightAnswer("");
     };
 
-    const handleDelete = (questionId) => {
-        deleteQuestion(questionId);
-    }
+    const handleDelete = (questionId) => deleteQuestion(questionId);
 
-    const deleteUndefined = (arr) => {
-        /* This method removes undefined elements from an array 
-        *  I am using it because I encontered a problem when
-        *  adding a new question, it is adding many empty
-        *  elements 
-        * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
-       return arr.filter(function( el ) {
-        return el !== undefined;
-      });
-    }
-    
     return (
         <div className={classes.root}>
             <Grid 
@@ -100,17 +88,15 @@ const AdminInterface = ({ questions, addQuestion, deleteQuestion }) => {
                         alignItems="center" 
                         spacing={1}
                     >
-                    {
-                        deleteUndefined(questions).map( question => {
-                            return (
-                                <QuizzQuestion 
-                                    key={question.id} 
-                                    question={question}
-                                    deleteQuestion={handleDelete}
-                                />
-                            );
-                        })
-                    }
+                    {deleteUndefined(questions).map( question => {
+                        return (
+                            <QuizzQuestion 
+                                key={question.id} 
+                                question={question}
+                                deleteQuestion={handleDelete}
+                            />
+                        );
+                    })}
                     </Grid>
                 </fieldset>
                 </Grid>
@@ -189,12 +175,6 @@ AdminInterface.propTypes = {
     addQuestion: PropTypes.func.isRequired,
     deleteQuestion: PropTypes.func.isRequired
 }; 
-
-AdminInterface.defaultProps = {
-    questions: [],  
-    addQuestion: null,
-    deleteQuestion: null
-};
 
 const mapStateToProps = (state) => ({ questions: state.questions }); 
 

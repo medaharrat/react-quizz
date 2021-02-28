@@ -100,12 +100,15 @@ const QuizzQuestion = ({
 QuizzQuestion.propTypes = {
     question: PropTypes.object.isRequired, 
     withAnswers: PropTypes.bool, 
-    onAnswerSelect: PropTypes.func
+    onAnswerSelect: PropTypes.func,
+    showRightAnswer: PropTypes.bool,
+    deleteQuestion: PropTypes.func
   };
   
   QuizzQuestion.defaultProps = {
-    question: {}, 
     withAnswers: false,
+    showRightAnswer: false,
+    onAnswerSelect: null
 };
 
 export default QuizzQuestion;  

@@ -1,6 +1,7 @@
 import { RECEIVE_QUESTIONS, ADD_QUESTION, DELETE_QUESTION } from '../Actions/types';                           
 
 const initialState = {
+  /* Dummy questions to start with */
   questions: [
     {
         id: 1,

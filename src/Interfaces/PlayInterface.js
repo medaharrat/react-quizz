@@ -9,6 +9,7 @@ import {
 } from '@material-ui/core';
 import QuizzButton from '../Components/QuizzButton';
 import QuizzQuestion from '../Components/QuizzQuestion';
+import { deleteUndefined } from '../utils/commonFunc';
 import { connect } from 'react-redux';
 import clsx from  'clsx';
 
@@ -60,18 +61,8 @@ const Play = ({ questions, username }) => {
     const [score, setScore]                                   = useState(0);
     const [showAnswer, setShowAnswer]                         = useState(false);
 
-    const deleteUndefined = (arr) => {
-        /* This method removes undefined elements from an array 
-        *  I am using it because I encontered a problem when
-        *  adding a new question, it is adding many empty
-        *  elements 
-        * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
-       return arr.filter(function( el ) {
-        return el !== undefined;
-      });
-    }
-
     const questionsNoUndef = deleteUndefined(questions);
+
     const handleAnswer = () => {
         /* Selected Answer is the right one here */
         if (selectedAnswer.length !== 0){
@@ -93,7 +84,7 @@ const Play = ({ questions, username }) => {
             setSelectedAnswer("");
         }
         else 
-            alert('Oops! You have not answered this question.')
+            alert('Oops! You have not answered this question yet.')
     }
 
     return (
@@ -107,29 +98,26 @@ const Play = ({ questions, username }) => {
                         showRightAnswer={showAnswer}
                     />
                     <Grid item xs={12}>
-                    {
-                        (answeredQuestions.length !== questionsNoUndef.length) && (
-                            <QuizzButton onClick={ handleAnswer } primary text = "Next"/>
-                        )
-                    }
+                    {(answeredQuestions.length !== questionsNoUndef.length) && (
+                        <QuizzButton onClick={ handleAnswer } primary text = "Next"/>
+                    )}
                     </Grid>
                     <Grid item xs={6}>
                         <Paper className={classes.paper}>
                             <Typography variant="subtitle2" gutterBottom>
                                 Answered questions
                                 <b className={classes.chips}>
-                                { 
-                                    answeredQuestions.map((question) => {
-                                        return (
-                                            <Chip
-                                                key={question.id} 
-                                                size="small" 
-                                                className={classes.chip}
-                                                color="secondary"
-                                                label={answeredQuestions.indexOf(question) + 1} 
-                                            />
-                                    )})
-                                }
+                                {answeredQuestions.map((question) => {
+                                    return (
+                                        <Chip
+                                            key={question.id} 
+                                            size="small" 
+                                            className={classes.chip}
+                                            color="secondary"
+                                            label={answeredQuestions.indexOf(question) + 1} 
+                                        />
+                                    )
+                                })}
                                 </b>
                             </Typography>
                         </Paper>
@@ -153,11 +141,6 @@ Play.propTypes = {
     questions: PropTypes.array.isRequired,  
     username: PropTypes.string.isRequired,
 }; 
-
-Play.defaultProps = {
-    questions: [],  
-    username: ""
-};
 
 const mapStateToProps = (state) => ({ questions: state.questions, username: state.user.username }); 
 export default connect(mapStateToProps)(Play);  

@@ -87,10 +87,5 @@ UserInterface.propTypes = {
     setUsername: PropTypes.func.isRequired
 }; 
 
-UserInterface.defaultProps = {
-    questions: [],  
-    setUsername: null
-};
-
 const mapStateToProps = (state) => ({ questions: state.questions }); 
 export default connect(mapStateToProps, { setUsername })(UserInterface);  
