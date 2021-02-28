@@ -1,17 +1,16 @@
 import React from 'react';
+import { makeStyles } from '@material-ui/styles';
 import {
     Switch,
     Route,
     Redirect
   } from "react-router-dom";
-import { makeStyles } from '@material-ui/styles';
+  import { Container, Box } from '@material-ui/core';
 import QuizzButton from '../Components/QuizzButton';
 import QuizzLink from '../Components/QuizzLink';
-import Box from '@material-ui/core/Box';
 import AdminInterface from '../Interfaces/AdminInterface';
 import UserInterface from '../Interfaces/UserInterface';
 import PlayInterface from '../Interfaces/PlayInterface';
-import Container from '@material-ui/core/Container';
 import { connect } from 'react-redux';
 
 const styles = makeStyles((theme) => ({
@@ -27,17 +26,14 @@ const General = ({ username }) => {
     return (
         <Container>
             <Box component="div" className={classes.container}>
-                <QuizzLink
-                    to="/admin"
-                >
+                { /* NAV */ }
+                <QuizzLink to="/admin">
                     <QuizzButton primary text = "Admin"/>
                 </QuizzLink>
-                <QuizzLink
-                    to="/play"
-                >
+                <QuizzLink to="/play">
                     <QuizzButton primary text = "User"/>
                 </QuizzLink>
-                
+                { /* ROUTES */ }
                 <Switch>
                     <Route path="/admin">
                         <AdminInterface />

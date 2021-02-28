@@ -72,22 +72,23 @@ const Play = ({ questions, username }) => {
     }
 
     const questionsNoUndef = deleteUndefined(questions);
-
     const handleAnswer = () => {
+        /* Selected Answer is the right one here */
         if (selectedAnswer.length !== 0){
             /* Set the score */
-            if (selectedAnswer === questions[currentQuestionIndex].right_answer)
+            if (selectedAnswer === questionsNoUndef[currentQuestionIndex].right_answer)
                 setScore(score + 1);
             /* Save the answered questions */
-            setAnsweredQuestions([ ...answeredQuestions, questions[currentQuestionIndex]]);
+            setAnsweredQuestions([ ...answeredQuestions, questionsNoUndef[currentQuestionIndex]]);
             /* Show the right answer */
             setShowAnswer(true);
             /* Skip to the next questions */
             setTimeout(() => {
-                if ((currentQuestionIndex + 1) !== questions.length)
-                    setCurrentQuestionIndex(currentQuestionIndex + 1)
+                if ((currentQuestionIndex + 1) !== questionsNoUndef.length){
+                    setCurrentQuestionIndex(currentQuestionIndex + 1);
                     setShowAnswer(false);
-            }, 700);
+                }
+            }, 400);
             /* Reset */
             setSelectedAnswer("");
         }
@@ -98,18 +99,13 @@ const Play = ({ questions, username }) => {
     return (
             <div className={classes.root}>
                 <Grid container alignItems="center" spacing={3}>
-                    {
-                        [questionsNoUndef[currentQuestionIndex]].map(question => {
-                            return (
-                                <QuizzQuestion 
-                                    question={question} 
-                                    onAnswerSelect={setSelectedAnswer} 
-                                    withAnswers 
-                                    showRightAnswer={showAnswer}
-                                />
-                            )
-                        })
-                    }
+                    <QuizzQuestion 
+                        key={questionsNoUndef[currentQuestionIndex].id}
+                        question={questionsNoUndef[currentQuestionIndex]} 
+                        onAnswerSelect={setSelectedAnswer} 
+                        withAnswers 
+                        showRightAnswer={showAnswer}
+                    />
                     <Grid item xs={12}>
                     {
                         (answeredQuestions.length !== questionsNoUndef.length) && (
@@ -123,13 +119,14 @@ const Play = ({ questions, username }) => {
                                 Answered questions
                                 <b className={classes.chips}>
                                 { 
-                                    answeredQuestions.map((qst) => {
+                                    answeredQuestions.map((question) => {
                                         return (
-                                            <Chip 
+                                            <Chip
+                                                key={question.id} 
                                                 size="small" 
                                                 className={classes.chip}
                                                 color="secondary"
-                                                label={answeredQuestions.indexOf(qst) + 1} 
+                                                label={answeredQuestions.indexOf(question) + 1} 
                                             />
                                     )})
                                 }

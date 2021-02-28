@@ -80,9 +80,7 @@ const QuizzQuestion = ({
                 <RadioGroup aria-label="answer" name="answerr" value={selectedAnswer} onChange={handleChange}>   
                 {
                     question.possible_answers.map( answer => {
-                        console.log(question.right_answer === selectedAnswer);
                         return (
-                            
                             <QuizzAnswer 
                                 key={answer} 
                                 answer={answer} 

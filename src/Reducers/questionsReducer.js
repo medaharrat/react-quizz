@@ -4,39 +4,21 @@ const initialState = {
   questions: [
     {
         id: 1,
-        question: "How old are you?",
-        possible_answers: ["13", "25", "31", "50"],
-        right_answer: "25"
+        question: "Test Question 1?",
+        possible_answers: ["Answer 1", "Answer 2", "Answer 3", "Answer 4"],
+        right_answer: "Answer 1"
     },
     {
         id: 2,
-        question: "Where do you live?",
-        possible_answers: ["U.S", "Canada", "France"],
-        right_answer: "Canada"
+        question: "Test Question 2?",
+        possible_answers: ["Answer 1", "Answer 2", "Answer 3", "Answer 4"],
+        right_answer: "Answer 2"
     },
     {
         id: 3,
-        question: "What is your highest degree?",
-        possible_answers: ["Bachelor", "Masters", "PhD"],
-        right_answer: "PhD"
-    },
-    {
-        id: 4,
-        question: "What is your name?",
-        possible_answers: ["Med", "Cali", "Moha"],
-        right_answer: "Med"
-    },
-    {
-        id: 5,
-        question: "What is your mothers mainden name?",
-        possible_answers: ["Fati", "Mari", "Selma"],
-        right_answer: "Mari"
-    },
-    {
-        id: 6,
-        question: "What is your highest achievement?",
-        possible_answers: ["1", "2", "3"],
-        right_answer: "2"
+        question: "Test Question 3?",
+        possible_answers: ["Answer 1", "Answer 2", "Answer 3", "Answer 4"],
+        right_answer: "Answer 3"
     },
   ] 
 }
